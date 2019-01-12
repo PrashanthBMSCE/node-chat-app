@@ -9,8 +9,9 @@ socket.on('disconnect', function () {
 
 socket.on('newMessage', function (message) {
     console.log('newMessage', message);
+    var formatedTime = moment(message.createdAt).format('h:mm a');
     var li = jQuery('<li></li>');
-    li.text(`${message.from}: ${message.text}`);
+    li.text(`${message.from} ${formatedTime}: ${message.text}`);
     jQuery('#messages').append(li);
 
 });
@@ -55,9 +56,10 @@ locationButton.on('click', function () {
 })
 
 socket.on('newLocationMessage', function (coords) {
+    var formatedTime = moment(coords.createdAt).format('h:mm a');
     var li = jQuery('<li></li>');
     var a = jQuery('<a target="_blank">My current location</a>');
-    li.text(`${coords.from}`)
+    li.text(`${coords.from} ${formatedTime}`)
     a.attr('href', coords.url);
     li.append(a);
     jQuery('#messages').append(li);

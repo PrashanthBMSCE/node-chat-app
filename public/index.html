@@ -10,9 +10,15 @@
 </head>
 
 <body class="chat">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.18.1/moment.min.js"></script>
+
     <div class='chat__sidebar'>
         <h3>People</h3>
-        <div id='users'></div>
+
+        <div id='users'>
+           <!-- <label>Upload File: <input type="file" id="file_input" /></label>
+            <button id="my_button">Upload File</button>-->
+        </div>
     </div>
 
     <div class='chat__main'>
@@ -27,8 +33,9 @@
     </div>
 
     </form>
-    <script src='/socket.io/socket.io.js'></script>
+    <script src='/socket.io/socket.io.js'></script> 
     <script src='./js/lib/jquery.js'></script>
+    <script src='/js/lib/moment.js'></script>
     <script src='./js/index.js'> </script>
 </body>
 
