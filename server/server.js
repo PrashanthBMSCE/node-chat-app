@@ -37,7 +37,7 @@ io.on('connection', (socket) => {
             text: 'welcome to chat',
             createdAt: new Date().getTime()
         })
-        socket.broadcast.emit('newMessage', {
+        socket.broadcast.to(params.room).emit('newMessage', {
             from: 'Admin',
             text: `${params.name} has joined.`,
             createdAt: new Date().getTime()
@@ -47,8 +47,10 @@ io.on('connection', (socket) => {
         callback();
     })
     socket.on('createMessage', (message, callback) => {
-        console.log('new message', message);
-        io.emit('newMessage', { from: message.from, text: message.text, createdAt: new Date().getTime() })
+        var user = users.getUser(socket.id);
+        if (user && isRealString(message.text)) {
+            io.to(user.room).emit('newMessage', generateMessage(user.name, message.text));
+        }
         callback('this is from server')
     })
 
@@ -62,7 +64,11 @@ io.on('connection', (socket) => {
     })
 
     socket.on('sendLocation', (coords) => {
-        io.emit('newLocationMessage', generateLocationMessage('Admin', coords.latitude, coords.longitude))
+        var user = users.getUser(socket.id);
+        if (user) {
+            io.to(user.room).emit('newLocationMessage', generateLocationMessage(user.name, coords.latitude, coords.longitude))
+
+        }
     })
 
 

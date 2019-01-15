@@ -40,7 +40,6 @@ socket.on('updateUserList', function (users) {
 })
 
 socket.on('newMessage', function (message) {
-    console.log('newMessage', message);
     var formatedTime = moment(message.createdAt).format('h:mm a');
     var template = jQuery('#message-template').html();
     var html = Mustache.render(template, {
@@ -66,7 +65,6 @@ jQuery('#message-form').on('submit', function (e) {
     e.preventDefault();
 
     socket.emit('createMessage', {
-        from: 'User',
         text: jQuery('[name=message]').val()
     }, function () {
         jQuery('[name=message]').val('')
